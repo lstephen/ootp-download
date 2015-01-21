@@ -16,6 +16,7 @@ class League
   end
 end
 
+
 class Cfg
   attr_reader :league
 
@@ -23,9 +24,11 @@ class Cfg
     @league = {}
 
     @directory = {
-      :OOTP5 => "#{Dir.home()}/Applications/Wineskin/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5",
-      :OOTP6 => "#{Dir.home()}/Applications/Wineskin/OOTP6.app/drive_c/Program Files/Out of the Park Developments/OOTP 6",
-      :OOTP65 => "#{Dir.home()}/Applications/Wineskin/OOTP6.5.app/drive_c/Program Files/Out of the Park Developments/OOTP 6.5"
+      :OOTP5 => [
+        "#{Dir.home()}/Applications/Wineskin/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5",
+        "#{Dir.home()}/Desktop/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5"],
+      :OOTP6 => ["#{Dir.home()}/Applications/Wineskin/OOTP6.app/drive_c/Program Files/Out of the Park Developments/OOTP 6"],
+      :OOTP65 => ["#{Dir.home()}/Applications/Wineskin/OOTP6.5.app/drive_c/Program Files/Out of the Park Developments/OOTP 6.5"]
     }
   end
 
@@ -52,7 +55,7 @@ class OotpDownload
     logger.info(league_name) { "Downloading..." }
     download(league)
     logger.info(league_name) { "Extracting..." }
-    extract(league)
+    extract(league, logger)
     logger.info(league_name) { "Done." }
   end
 
@@ -62,36 +65,30 @@ class OotpDownload
     `#{cmd}`
   end
 
-  def self.extract(league)
-    extract_to = @@config.directory(league.version)
+  def self.extract(league, logger = nil)
+    @@config.directory(league.version).each do |extract_to|
+      next unless Dir.exists?(extract_to)
 
-    if league.create_league_directory then
-      extract_to = "#{extract_to}/#{league.name}.lg"
-      `mkdir "#{extract_to}"`
+      if league.create_league_directory then
+        extract_to = "#{extract_to}/#{league.name}.lg"
+        `mkdir "#{extract_to}"`
+      end
+
+      logger.info(league.name) { "Extracting to #{extract_to}" } unless logger.nil?
+
+      cmd = "unzip -o #{league.name}.zip -d \"#{extract_to}\""
+      `#{cmd}`
     end
-
-    cmd = "unzip -o #{league.name}.zip -d \"#{extract_to}\""
-    `#{cmd}`
   end
 end
 
 load 'config.rb'
-
-#OotpDownload.configure do |c|
-#  c.league["HFTC"] = League.new :HFTC, 'http://www.hitforthecycle.com/Hit%20For%20The%20Cycle.zip'
-#end
-
-#HFTC = League.new :HFTC
-#GABL = League.new :GABL
-#CBL = League.new :CBL, :create_league_directory => true
 
 $league_files = {
   :HFTC => 'http://www.hitforthecycle.com/Hit%20For%20The%20Cycle.zip',
   :GABL => 'http://www.goldenageofbaseball.com/commish/gabl.lg.zip',
   :CBL => 'http://www.thecblonline.com/zips/cbl.zip'
 }
-
-
 
 ARGV.each do |league_name|
   OotpDownload.run(league_name)
