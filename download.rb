@@ -66,19 +66,17 @@ class OotpDownload
   end
 
   def self.extract(league, logger = nil)
-    @@config.directory(league.version).each do |extract_to|
-      next unless Dir.exists?(extract_to)
+    extract_to = @@config.directory(league.version).detect { |d| Dir.exists?(d) }
 
-      if league.create_league_directory then
-        extract_to = "#{extract_to}/#{league.name}.lg"
-        `mkdir "#{extract_to}"`
-      end
-
-      logger.info(league.name) { "Extracting to #{extract_to}" } unless logger.nil?
-
-      cmd = "unzip -o #{league.name}.zip -d \"#{extract_to}\""
-      `#{cmd}`
+    if league.create_league_directory then
+      extract_to = "#{extract_to}/#{league.name}.lg"
+      `mkdir "#{extract_to}"`
     end
+
+    logger.info(league.name) { "Extracting to #{extract_to}" } unless logger.nil?
+
+    cmd = "unzip -o #{league.name}.zip -d \"#{extract_to}\""
+    `#{cmd}`
   end
 end
 
