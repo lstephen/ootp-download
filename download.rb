@@ -61,7 +61,7 @@ class OotpDownload
 
   def self.download(league)
     raise 'No league file set' if league.file.nil?
-    cmd = "curl #{league.file} -o #{league.name}.zip"
+    cmd = "curl -L #{league.file} -o #{league.name}.zip"
     `#{cmd}`
   end
 
