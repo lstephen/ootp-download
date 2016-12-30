@@ -24,11 +24,9 @@ class Cfg
     @league = {}
 
     @directory = {
-      :OOTP5 => [
-        "#{Dir.home()}/Applications/Wineskin/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5",
-        "#{Dir.home()}/Desktop/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5"],
-      :OOTP6 => ["#{Dir.home()}/Applications/Wineskin/OOTP6.app/drive_c/Program Files/Out of the Park Developments/OOTP 6"],
-      :OOTP65 => ["#{Dir.home()}/Applications/Wineskin/OOTP6.5.app/drive_c/Program Files/Out of the Park Developments/OOTP 6.5"]
+      :OOTP5 => ["/Applications/OOTP5.app/drive_c/Program Files/Out of the Park Developments/OOTP5"],
+      :OOTP6 => ["/Applications/OOTP6.app/drive_c/Program Files/Out of the Park Developments/OOTP 6"],
+      :OOTP65 => ["/Applications/OOTP6.5.app/drive_c/Program Files/Out of the Park Developments/OOTP 6.5"]
     }
   end
 

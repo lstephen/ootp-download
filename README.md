@@ -10,7 +10,7 @@ This has not been tested outside my own use. I make no claims or take any respon
 
   * `curl` is installed and present on the path
   * `unzip` is installed and present on the path
-  * The OOTP wineskin packages are installed under `~/Applications/Wineskin`. (TODO: Make this directory configurable)
+  * The OOTP wineskin packages are installed under `/Applications`. (TODO: Make this directory configurable)
   
 ## Usage
 
