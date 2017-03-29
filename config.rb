@@ -6,7 +6,7 @@ OotpDownload.configure do |c|
   c.add League.new :LBB, 'http://bbs56.net/LBB/file/LBB.lg.zip'
   c.add League.new :SAVOY, 'http://www.thecblonline.com/savoy/zips/Savoy.zip', :create_league_directory => true
 
-  c.add League.new :TWML, 'http://www.darowski.com/twml/OOTP6Reports/TWML%202.0.lg.zip', :create_league_directory => true, :version => :OOTP6
+  c.add League.new :TWML, 'http://www.darowski.com/twml/OOTP6Reports/TWML%202.0.lg.zip', :version => :OOTP6
 
   c.add League.new :BTH, 'http://bthbaseball.allsimbaseball10.com/game/lgexports/BTH.lg.zip', :version => :OOTP65
   c.add League.new :OLDBTH, 'bthbaseball.allsimbaseball10.com/game/oldbth/oldBTH.lg.zip', :version => :OOTP65
