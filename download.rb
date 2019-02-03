@@ -58,7 +58,8 @@ class OotpDownload
   end
 
   def self.download(league)
-    raise 'No league file set' if league.file.nil?
+    file = ENV["LEAGUE_FILE"] || league.file
+    raise 'No league file set' unless file
     cmd = "curl -L #{league.file} -o #{league.name}.zip"
     `#{cmd}`
   end
@@ -80,15 +81,7 @@ end
 
 load 'config.rb'
 
-$league_files = {
-  :HFTC => 'http://www.hitforthecycle.com/Hit%20For%20The%20Cycle.zip',
-  :GABL => 'http://www.goldenageofbaseball.com/commish/gabl.lg.zip',
-  :CBL => 'http://www.thecblonline.com/zips/cbl.zip'
-}
-
-ARGV.each do |league_name|
-  OotpDownload.run(league_name)
-end
+OotpDownload.run ARGV.first
 
 
 
